@@ -9,13 +9,12 @@
       body {
         font-family: Arial, Helvetica, sans-serif;
         display: grid;
-        grid-template-columns: 60% 40%;
+        grid-template-columns: 60% 1% 40%;
         height: 100vh;
       }
       .calculater-field-wrapper {
         display: flex;
         flex-direction: column;
-        justify-content: center;
       }
       #zwischenstand {
         font-size: 1.5rem;
@@ -37,94 +36,28 @@
       #solution-list {
         list-style-type: none;
       }
+      .solution-scroll {
+        overflow-y: auto;
+        height: 100vh;
+      }
       #solution-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
         font-size: 1.5rem;
       }
-      #rechnung {
-        font-size: 1.4rem;
-        color: gray;
-      }
-      #lösung,
-      #rechnung {
+      #lösung {
         margin-left: 5rem;
+        font-size: 2rem;
+        color: blue;
       }
-      #solution-container {
-        solution
+      .line {
+        width: 1px;
+        height: 100vh;
+        background-color: gray;
+        margin: 0 1rem;
+      }
+      #username {
+        color: red;
       }
     </style>
-    <script>
-      let eingabe = 0;
-      let zwischenstand = 0;
-      let lösung = 0;
-      let o = "+";
-      let zwischenstandNumber = 0;
-
-      function number(zahl) {
-        eingabe = eingabe * 10 + zahl;
-        updateEingabe();
-      }
-
-      function operator(op) {
-        zwischenstand = eingabe + op;
-        o = op;
-        zwischenstandNumber = eingabe;
-        updateZwischenstand();
-        eingabe = 0;
-        updateEingabe();
-      }
-
-      function calculate() {
-        rechnung = eingabe + " + " + zwischenstand + " =";
-        if (o === "+") {
-          lösung = zwischenstandNumber + eingabe;
-        } else if (o === "-") {
-          lösung = zwischenstandNumber - eingabe;
-        } else if (o === "*") {
-          lösung = zwischenstandNumber * eingabe;
-        } else if (o === "/") {
-          lösung = zwischenstandNumber / eingabe;
-        }
-
-        eingabe = lösung;
-        zwischenstandNumber = 0;
-        zwischenstand = 0;
-        updateZwischenstand();
-        updateEingabe();
-
-        updateLösung();
-
-        console.log(lösung);
-        console.log(zwischenstand);
-        console.log(zwischenstandNumber);
-        console.log(eingabe);
-      }
-
-      function clearEingabe() {
-        eingabe = 0;
-        zwischenstand = 0;
-        zwischenstandNumber = 0;
-        lösung = 0;
-        updateEingabe();
-        updateZwischenstand();
-      }
-
-      function updateEingabe() {
-        document.getElementById("eingabe").innerHTML = eingabe;
-      }
-
-      function updateZwischenstand() {
-        document.getElementById("zwischenstand").innerHTML = zwischenstand;
-      }
-
-      function updateLösung() {
-        document.getElementById("lösung").innerHTML =
-          `<p> ${eingabe} + ${zwischenstandNumber} = ${lösung} <p>` +
-          document.getElementById("lösung").innerHTML;
-      }
-    </script>
   </head>
   <body>
     <div class="calculater-field-wrapper">
@@ -148,9 +81,96 @@
         ><button class="grid-item" onclick="calculate()">=</button
         ><button class="grid-item" onclick="operator('+')">+</button>
       </div>
+      <h1>calculated by <span id="username">yourname</span></h1>
     </div>
-    <div id="solution-container">
-      <p id="lösung"></p>
+    <div class="line"></div>
+    <div class="solution-scroll">
+      <div id="solution-container">
+        <p id="lösung"></p>
+      </div>
     </div>
+    <script>
+      "use strict";
+
+      let eingabe = 0;
+      let zwischenstand = 0;
+      let lösung = 0;
+      let o = "+";
+      let zwischenstandNumber = 0;
+      let username = "you";
+
+      // Username
+      usernameEingabe();
+      function usernameEingabe() {
+        username = prompt(`Enter username:`);
+      }
+      console.log(username);
+      // function getUsername() {}
+      updateUsername();
+
+      // Zahlen anzeigen lassen
+      function number(zahl) {
+        eingabe = eingabe * 10 + zahl;
+        updateEingabe();
+      }
+
+      // Operatoren anzeigen lassen
+      function operator(op) {
+        zwischenstand = eingabe + op;
+        o = op;
+        zwischenstandNumber = eingabe;
+        updateZwischenstand();
+        eingabe = 0;
+        updateEingabe();
+      }
+
+      // Kalkulation
+      function calculate() {
+        if (o === "+") {
+          lösung = zwischenstandNumber + eingabe;
+        } else if (o === "-") {
+          lösung = zwischenstandNumber - eingabe;
+        } else if (o === "*") {
+          lösung = zwischenstandNumber * eingabe;
+        } else if (o === "/") {
+          lösung = zwischenstandNumber / eingabe;
+        }
+
+        updateLösung();
+        eingabe = lösung;
+        zwischenstandNumber = 0;
+        zwischenstand = 0;
+        updateZwischenstand();
+        updateEingabe();
+      }
+
+      // alles zurücksetzen
+      function clearEingabe() {
+        eingabe = 0;
+        zwischenstand = 0;
+        zwischenstandNumber = 0;
+        lösung = 0;
+        updateEingabe();
+        updateZwischenstand();
+      }
+
+      // aktualiert die Zahlen die angezeigt werden und stellt die "Verbindung" zu den HTML elementen her.
+      function updateEingabe() {
+        document.getElementById("eingabe").innerHTML = eingabe;
+      }
+
+      function updateZwischenstand() {
+        document.getElementById("zwischenstand").innerHTML = zwischenstand;
+      }
+      function updateUsername() {
+        document.getElementById("username").innerHTML = username;
+      }
+
+      function updateLösung() {
+        document.getElementById("lösung").innerHTML =
+          `<p> ${zwischenstandNumber} ${o} ${eingabe} = ${lösung} <p>` +
+          document.getElementById("lösung").innerHTML;
+      }
+    </script>
   </body>
 </html>
