@@ -5,7 +5,7 @@ let preliminaryResult = 0;
 let solution = 0;
 let operator = "+";
 let preliminaryResultNumber = 0;
-let username = "you";
+let username = "";
 
 // usernameInput();
 // function usernameInput() {
@@ -86,6 +86,6 @@ function updateUsername() {
 
 function updateSolution() {
   document.getElementById("solution").innerHTML =
-    `<p> ${preliminaryResultNumber} ${operator} ${input} = ${solution} <p>` +
+    `<p class="solution-element"> ${preliminaryResultNumber} ${operator} ${input} = ${solution} <p>` +
     document.getElementById("solution").innerHTML;
 }
