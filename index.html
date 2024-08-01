@@ -5,182 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Taschenrechner</title>
 
-    <style>
-      html {
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: Arial, Helvetica, sans-serif;
-        display: grid;
-        grid-template-columns: 50% 1% 49%;
-        height: 100vh;
-        padding: 0;
-        margin: 0;
-      }
-      .calculater-field-wrapper {
-        display: flex;
-        flex-direction: column;
-        margin-left: 5rem;
-      }
-      #zwischenstand {
-        font-size: 1.5rem;
-        text-align: right;
-      }
-      #eingabe {
-        font-size: 2.5rem;
-        text-align: right;
-      }
-      .grid-container {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        gap: 0.2rem;
-      }
-      .grid-item {
-        font-size: 2rem;
-        height: 5rem;
-      }
-      #zwischenstand {
-        margin-top: 5rem;
-      }
-      #solution-list {
-        list-style-type: none;
-      }
-      .solution-scroll {
-        overflow-y: auto;
-        height: 100vh;
-      }
-      #solution-container {
-        font-size: 1.5rem;
-      }
-      #lösung {
-        margin-left: 5rem;
-        font-size: 2rem;
-        color: blue;
-      }
-      .line {
-        width: 1px;
-        height: 100vh;
-        background-color: gray;
-        margin: 0 1rem;
-      }
-      #username {
-        color: red;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="calculater-field-wrapper">
-      <div id="zwischenstand">0</div>
-      <div id="eingabe">0</div>
+      <div id="preliminaryResult">0</div>
+      <div id="input">0</div>
       <div class="grid-container">
-        <button class="grid-item" onclick="number(7)">7</button
-        ><button class="grid-item" onclick="number(8)">8</button
-        ><button class="grid-item" onclick="number(9)">9</button
-        ><button class="grid-item" onclick="operator('/')">/</button>
-        <button class="grid-item" onclick="number(4)">4</button
-        ><button class="grid-item" onclick="number(5)">5</button
-        ><button class="grid-item" onclick="number(6)">6</button
-        ><button class="grid-item" onclick="operator('*')">*</button>
-        <button class="grid-item" onclick="number(1)">1</button
-        ><button class="grid-item" onclick="number(2)">2</button
-        ><button class="grid-item" onclick="number(3)">3</button
-        ><button class="grid-item" onclick="operator('-')">-</button>
-        <button class="grid-item" onclick="clearEingabe()">CE</button
-        ><button class="grid-item" onclick="number(0)">0</button
-        ><button class="grid-item" onclick="calculate()">=</button
-        ><button class="grid-item" onclick="operator('+')">+</button>
+        <button class="grid-item" onclick="addNumber(7)">7</button>
+        <button class="grid-item" onclick="addNumber(8)">8</button>
+        <button class="grid-item" onclick="addNumber(9)">9</button>
+        <button class="grid-item" onclick="useOperator('/')">/</button>
+        <button class="grid-item" onclick="addNumber(4)">4</button>
+        <button class="grid-item" onclick="addNumber(5)">5</button>
+        <button class="grid-item" onclick="addNumber(6)">6</button>
+        <button class="grid-item" onclick="useOperator('*')">*</button>
+        <button class="grid-item" onclick="addNumber(1)">1</button>
+        <button class="grid-item" onclick="addNumber(2)">2</button>
+        <button class="grid-item" onclick="addNumber(3)">3</button>
+        <button class="grid-item" onclick="useOperator('-')">-</button>
+        <button class="grid-item" onclick="clearInput()">CE</button>
+        <button class="grid-item" onclick="addNumber(0)">0</button>
+        <button class="grid-item" onclick="calculate()">=</button>
+        <button class="grid-item" onclick="useOperator('+')">+</button>
       </div>
-      <h1>calculated by <span id="username">yourname</span></h1>
+      <h1 class="username-text">
+        calculated by <span id="username">yourname</span>
+      </h1>
     </div>
-    <div class="line"></div>
     <div class="solution-scroll">
       <div id="solution-container">
-        <p id="lösung"></p>
+        <h2 class="solution-text">Lösung:</h2>
+        <p id="solution"></p>
       </div>
     </div>
-    <script>
-      "use strict";
-
-      let eingabe = 0;
-      let zwischenstand = 0;
-      let lösung = 0;
-      let o = "+";
-      let zwischenstandNumber = 0;
-      let username = "you";
-
-      // Username
-      usernameEingabe();
-      function usernameEingabe() {
-        username = prompt(`Enter username:`);
-      }
-      console.log(username);
-      // function getUsername() {}
-      updateUsername();
-
-      // Zahlen anzeigen lassen
-      function number(zahl) {
-        eingabe = eingabe * 10 + zahl;
-        updateEingabe();
-      }
-
-      // Operatoren anzeigen lassen
-      function operator(op) {
-        zwischenstand = eingabe + op;
-        o = op;
-        zwischenstandNumber = eingabe;
-        updateZwischenstand();
-        eingabe = 0;
-        updateEingabe();
-      }
-
-      // Kalkulation
-      function calculate() {
-        if (o === "+") {
-          lösung = zwischenstandNumber + eingabe;
-        } else if (o === "-") {
-          lösung = zwischenstandNumber - eingabe;
-        } else if (o === "*") {
-          lösung = zwischenstandNumber * eingabe;
-        } else if (o === "/") {
-          lösung = zwischenstandNumber / eingabe;
-        }
-
-        updateLösung();
-        eingabe = lösung;
-        zwischenstandNumber = 0;
-        zwischenstand = 0;
-        updateZwischenstand();
-        updateEingabe();
-      }
-
-      // alles zurücksetzen
-      function clearEingabe() {
-        eingabe = 0;
-        zwischenstand = 0;
-        zwischenstandNumber = 0;
-        lösung = 0;
-        updateEingabe();
-        updateZwischenstand();
-      }
-
-      // aktualiert die Zahlen die angezeigt werden und stellt die "Verbindung" zu den HTML elementen her.
-      function updateEingabe() {
-        document.getElementById("eingabe").innerHTML = eingabe;
-      }
-
-      function updateZwischenstand() {
-        document.getElementById("zwischenstand").innerHTML = zwischenstand;
-      }
-      function updateUsername() {
-        document.getElementById("username").innerHTML = username;
-      }
-
-      function updateLösung() {
-        document.getElementById("lösung").innerHTML =
-          `<p> ${zwischenstandNumber} ${o} ${eingabe} = ${lösung} <p>` +
-          document.getElementById("lösung").innerHTML;
-      }
-    </script>
+    <script lang="javascript" type="text/javascript" src="main.js"></script>
   </body>
 </html>
