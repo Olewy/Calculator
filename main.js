@@ -42,8 +42,6 @@ function equalSign() {
   preliminaryResult = 0;
   updatePreliminaryResult();
   updateInput();
-
-  console.log(input);
 }
 
 function calculate() {
