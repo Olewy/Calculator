@@ -125,9 +125,9 @@ body {
     color: blue;
     word-break: break-all;
   }
-  p {
+  /* p {
     margin-top: 1rem;
-  }
+  } */
   .line {
     width: 1px;
     height: 100vh;
