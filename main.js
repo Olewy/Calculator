@@ -6,7 +6,6 @@ let solution = 0;
 let operator = "+";
 let preliminaryResultNumber;
 let username = "";
-// let solutionShow = false;
 
 function addNumber(zahl) {
   input = input * 10 + zahl;
@@ -26,18 +25,7 @@ function useOperator(operatorSymbol) {
     input = 0;
     updateInput();
   } else {
-    if (operator === "+") {
-      solution = preliminaryResultNumber + input;
-    } else if (operator === "-") {
-      solution = preliminaryResultNumber - input;
-    } else if (operator === "*") {
-      solution = preliminaryResultNumber * input;
-    } else if (operator === "/") {
-      solution = preliminaryResultNumber / input;
-    }
-
-    updateSolution();
-    input = solution;
+    calculate();
 
     preliminaryResult = input + operatorSymbol;
     operator = operatorSymbol;
@@ -46,6 +34,16 @@ function useOperator(operatorSymbol) {
     input = 0;
     updateInput();
   }
+}
+
+function equalSign() {
+  calculate();
+  preliminaryResultNumber = 0;
+  preliminaryResult = 0;
+  updatePreliminaryResult();
+  updateInput();
+
+  console.log(input);
 }
 
 function calculate() {
@@ -60,32 +58,16 @@ function calculate() {
   }
 
   updateSolution();
-
   input = solution;
-  preliminaryResultNumber = 0;
-  preliminaryResult = 0;
-  updatePreliminaryResult();
-  updateInput();
-
-  console.log(input);
-  //   input = 0;
-  //   operator = "";
 }
-
-// function toggleSolutionVisible() {
-//   let solutionElement = document.getElementById("solution-show");
-//   if (solutionShow) {
-//     solutionElement.classList.;
-//   }
-// }
 
 function clearInput() {
   input = 0;
   preliminaryResult = 0;
   preliminaryResultNumber = 0;
-  solution = 0;
   updateInput();
   updatePreliminaryResult();
+  resetSolution();
 }
 
 function updateInput() {
@@ -104,4 +86,8 @@ function updateSolution() {
   document.getElementById("solution").innerHTML =
     `<p class="solution-element" id="solution-show"> ${preliminaryResultNumber} ${operator} ${input} = ${solution} <p>` +
     document.getElementById("solution").innerHTML;
+}
+
+function resetSolution() {
+  document.getElementById("solution").innerHTML = "";
 }
