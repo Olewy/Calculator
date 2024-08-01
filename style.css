@@ -65,15 +65,9 @@ body {
 .solution-element {
   margin-top: 1rem;
 }
-.line {
-  width: 1px;
-  height: 100vh;
-  background-color: gray;
-  margin: 0 1rem;
-}
-#username {
-  color: red;
-}
+/* #solution-show {
+  display: none;
+} */
 
 @media (max-width: 600px) {
   body {
@@ -138,15 +132,12 @@ body {
   .solution-element {
     margin-top: 1rem;
   }
+
   .line {
     width: 1px;
     height: 100vh;
     background-color: gray;
     margin: 0 1rem;
-  }
-  #username,
-  .username-text {
-    display: none;
   }
 }
 

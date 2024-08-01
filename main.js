@@ -1,18 +1,12 @@
 "use strict";
 
 let input = 0;
-let preliminaryResult = 0;
+let preliminaryResult = undefined;
 let solution = 0;
 let operator = "+";
-let preliminaryResultNumber = 0;
+let preliminaryResultNumber;
 let username = "";
-
-usernameInput();
-function usernameInput() {
-  username = prompt(`Enter username:`);
-}
-console.log(username);
-updateUsername();
+// let solutionShow = false;
 
 function addNumber(zahl) {
   input = input * 10 + zahl;
@@ -20,25 +14,38 @@ function addNumber(zahl) {
 }
 
 function useOperator(operatorSymbol) {
-  if (operator === "+") {
-    solution = preliminaryResultNumber + input;
-  } else if (operator === "-") {
-    solution = preliminaryResultNumber - input;
-  } else if (operator === "*") {
-    solution = preliminaryResultNumber * input;
-  } else if (operator === "/") {
-    solution = preliminaryResultNumber / input;
+  if (
+    preliminaryResult === undefined ||
+    input == 0 ||
+    preliminaryResultNumber == 0
+  ) {
+    preliminaryResult = input + operatorSymbol;
+    operator = operatorSymbol;
+    preliminaryResultNumber = input;
+    updatePreliminaryResult();
+    input = 0;
+    updateInput();
+  } else {
+    if (operator === "+") {
+      solution = preliminaryResultNumber + input;
+    } else if (operator === "-") {
+      solution = preliminaryResultNumber - input;
+    } else if (operator === "*") {
+      solution = preliminaryResultNumber * input;
+    } else if (operator === "/") {
+      solution = preliminaryResultNumber / input;
+    }
+
+    updateSolution();
+    input = solution;
+
+    preliminaryResult = input + operatorSymbol;
+    operator = operatorSymbol;
+    preliminaryResultNumber = input;
+    updatePreliminaryResult();
+    input = 0;
+    updateInput();
   }
-
-  updateSolution();
-  input = solution;
-
-  preliminaryResult = input + operatorSymbol;
-  operator = operatorSymbol;
-  preliminaryResultNumber = input;
-  updatePreliminaryResult();
-  input = 0;
-  updateInput();
 }
 
 function calculate() {
@@ -61,8 +68,16 @@ function calculate() {
   updateInput();
 
   console.log(input);
-  input = 0;
+  //   input = 0;
+  //   operator = "";
 }
+
+// function toggleSolutionVisible() {
+//   let solutionElement = document.getElementById("solution-show");
+//   if (solutionShow) {
+//     solutionElement.classList.;
+//   }
+// }
 
 function clearInput() {
   input = 0;
@@ -87,6 +102,6 @@ function updateUsername() {
 
 function updateSolution() {
   document.getElementById("solution").innerHTML =
-    `<p class="solution-element"> ${preliminaryResultNumber} ${operator} ${input} = ${solution} <p>` +
+    `<p class="solution-element" id="solution-show"> ${preliminaryResultNumber} ${operator} ${input} = ${solution} <p>` +
     document.getElementById("solution").innerHTML;
 }
