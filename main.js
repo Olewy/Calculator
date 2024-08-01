@@ -7,12 +7,12 @@ let operator = "+";
 let preliminaryResultNumber = 0;
 let username = "";
 
-// usernameInput();
-// function usernameInput() {
-//   username = prompt(`Enter username:`);
-// }
-// console.log(username);
-// updateUsername();
+usernameInput();
+function usernameInput() {
+  username = prompt(`Enter username:`);
+}
+console.log(username);
+updateUsername();
 
 function addNumber(zahl) {
   input = input * 10 + zahl;
