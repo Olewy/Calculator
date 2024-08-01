@@ -61,6 +61,7 @@ function calculate() {
   updateInput();
 
   console.log(input);
+  input = 0;
 }
 
 function clearInput() {
