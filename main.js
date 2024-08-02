@@ -6,6 +6,7 @@ let solution = 0;
 let operator = "+";
 let preliminaryResultNumber;
 let username = "";
+let backgroundColor = false;
 
 function addNumber(zahl) {
   input = input * 10 + zahl;
@@ -88,4 +89,16 @@ function updateSolution() {
 
 function resetSolution() {
   document.getElementById("solution").innerHTML = "";
+}
+
+function darkMode() {
+  let darkModeElement = document.getElementById("body");
+
+  if (backgroundColor) {
+    darkModeElement.classList.remove("dark-mode");
+  } else {
+    darkModeElement.classList.add("dark-mode");
+  }
+
+  backgroundColor = !backgroundColor;
 }
